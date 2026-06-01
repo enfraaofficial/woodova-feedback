@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="Woodova — Thank you for choosing us. Share your experience.">
+<meta name="theme-color" content="#DCEEF5">
+<title>Thank You — Woodova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+/* ── Page ── */
+body {
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background: #DCEEF5;
+}
+
+/* ── Watercolour background ── */
+.bg-wash {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg-wash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,  rgba(255,255,255,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 85% 80%,  rgba(92,145,179,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 80% at 50% 50%,  #DCEEF5 0%, #C9E0EC 100%);
+}
+.bg-wash::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: .4;
+  mix-blend-mode: multiply;
+}
+
+/* Drifting ink blobs */
+.ink {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  animation: drift ease-in-out infinite alternate;
+}
+.ink1 { width: 420px; height: 420px; background: rgba(92,145,179,0.22); top: -100px; right: -80px; animation-duration: 14s; }
+.ink2 { width: 300px; height: 300px; background: rgba(123,169,194,0.18); bottom: -60px; left: -60px; animation-duration: 11s; animation-delay: -5s; }
+.ink3 { width: 200px; height: 200px; background: rgba(255,255,255,0.5); top: 40%; left: 5%; animation-duration: 9s; animation-delay: -3s; }
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(20px, -28px) scale(1.07); }
+}
+
+/* ── Decorative corner flourishes ── */
+.corner { position: fixed; pointer-events: none; opacity: 0.22; z-index: 1; }
+.corner svg { display: block; }
+.corner-tl { top: 18px; left: 18px; }
+.corner-tr { top: 18px; right: 18px; transform: scaleX(-1); }
+.corner-bl { bottom: 18px; left: 18px; transform: scaleY(-1); }
+.corner-br { bottom: 18px; right: 18px; transform: scale(-1); }
+
+/* ── Card ── */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background: rgba(245,251,254,0.75);
+  backdrop-filter: blur(32px) saturate(1.6);
+  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.88);
+  border-radius: 28px;
+  padding: 3.5rem 3rem 2.8rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 2px 4px rgba(63,116,153,0.04),
+    0 8px 32px rgba(63,116,153,0.12),
+    0 32px 72px rgba(63,116,153,0.10),
+    0 1px 0 rgba(255,255,255,0.95) inset;
+  animation: cardReveal 1s cubic-bezier(.16,1,.3,1) both;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(123,169,194,0.7), transparent);
+  border-radius: 28px 28px 0 0;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 10%, rgba(92,145,179,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 90%, rgba(220,238,245,0.45) 0%, transparent 55%);
+  border-radius: inherit;
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Logo ── */
+.logo-wrap {
+  margin-bottom: 1.5rem;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .15s both;
+}
+.logo-icon {
+  width: 52px; height: 52px;
+  margin: 0 auto .6rem;
+  background: linear-gradient(135deg, #7BA9C2 0%, #4A85A8 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(74,133,168,0.35);
+}
+.logo-icon svg { width: 26px; height: 26px; }
+.logo-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 22px;
+  color: #2A5F80;
+  letter-spacing: .5px;
+  line-height: 1;
+}
+
+/* ── Ornament divider ── */
+.ornament {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 1.5rem;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .25s both;
+}
+.orn-line { flex: 1; max-width: 55px; height: 1px; background: linear-gradient(90deg, transparent, #B8D4E2); }
+.orn-line.r { background: linear-gradient(90deg, #B8D4E2, transparent); }
+.orn-mid { color: #7BA9C2; font-size: 9px; letter-spacing: 8px; }
+
+/* ── Heading ── */
+h1.heading {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(54px, 15vw, 78px);
+  line-height: 1.0;
+  color: #1E4D6B;
+  margin-bottom: .1rem;
+  filter: drop-shadow(0 2px 12px rgba(30,77,107,0.14));
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .3s both;
+}
+
+.for-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-weight: 400;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: #5A8BA3;
+  margin-bottom: 1.8rem;
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .38s both;
+}
+
+/* ── Body text ── */
+.body-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-style: italic; font-weight: 300;
+  color: #305A6F;
+  line-height: 1.9;
+  margin-bottom: 1.8rem;
+  padding: 0 .25rem;
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .45s both;
+}
+
+/* ── Tagline ── */
+.tagline {
+  font-family: 'Great Vibes', cursive;
+  font-size: 22px; color: #5A8BA3;
+  margin-bottom: 2rem;
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .52s both;
+}
+
+/* ── Button ── */
+.btn-wrap {
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .6s both;
+  margin-bottom: 2rem;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #7BA9C2 0%, #4A85A8 100%);
+  color: #fff;
+  border: none; border-radius: 50px;
+  padding: 15px 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 500; letter-spacing: .4px;
+  cursor: pointer; text-decoration: none;
+  box-shadow: 0 6px 22px rgba(74,133,168,0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+  transition: background .3s, transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+  -webkit-tap-highlight-color: transparent;
+  position: relative; overflow: hidden;
+}
+.share-btn::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  transition: left .5s ease;
+}
+.share-btn:hover::after { left: 160%; }
+.share-btn:hover {
+  background: linear-gradient(135deg, #5C91B3 0%, #2F6A8A 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 36px rgba(47,106,138,0.45), 0 1px 0 rgba(255,255,255,0.18) inset;
+}
+.share-btn:active { transform: scale(.97); }
+
+/* ── Card footer ── */
+.card-footer {
+  border-top: 1px solid rgba(123,169,194,0.22);
+  padding-top: 1.6rem;
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .68s both;
+}
+.stars-invite {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; letter-spacing: .8px; text-transform: uppercase;
+  color: #7BA9C2; margin-bottom: .6rem;
+}
+.stars-row { display: flex; justify-content: center; gap: 4px; }
+.star {
+  font-size: 22px; color: #1E4D6B; opacity: 0;
+  animation: starPop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.star:nth-child(1) { animation-delay: .72s; }
+.star:nth-child(2) { animation-delay: .80s; }
+.star:nth-child(3) { animation-delay: .88s; }
+.star:nth-child(4) { animation-delay: .96s; }
+.star:nth-child(5) { animation-delay: 1.04s; }
+@keyframes starPop {
+  from { opacity:0; transform: scale(.3) rotate(-20deg); }
+  to   { opacity:1; transform: scale(1) rotate(0deg); }
+}
+.gratitude {
+  margin-top: 1.3rem;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) 1.1s both;
+}
+.grat-script { font-family: 'Great Vibes', cursive; font-size: 19px; color: #5A8BA3; }
+.grat-sep { color: #B8D4E2; }
+.grat-name { font-family: 'DM Sans', sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #7BA9C2; }
+
+/* ── Shared ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Floating dots ── */
+.dot {
+  position: fixed; border-radius: 50%;
+  background: rgba(92,145,179,0.18);
+  pointer-events: none;
+  animation: floatDot ease-in-out infinite alternate;
+}
+.dot1 { width:8px; height:8px; top:16%; left:10%; animation-duration:6s; }
+.dot2 { width:5px; height:5px; top:72%; right:12%; animation-duration:8s; animation-delay:-3s; }
+.dot3 { width:6px; height:6px; top:84%; left:28%; animation-duration:7s; animation-delay:-1s; }
+.dot4 { width:4px; height:4px; top:22%; right:20%; animation-duration:5s; animation-delay:-2s; }
+@keyframes floatDot {
+  from { transform: translate(0,0); opacity:.4; }
+  to   { transform: translate(6px,-10px); opacity:.9; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .card { padding: 2.8rem 1.8rem 2.2rem; border-radius: 22px; }
+  h1.heading { font-size: 58px; }
+  .body-text { font-size: 16px; }
+  .share-btn { padding: 14px 28px; font-size: 14px; width: 100%; justify-content: center; }
+  .corner { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Background wash -->
+<div class="bg-wash">
+  <div class="ink ink1"></div>
+  <div class="ink ink2"></div>
+  <div class="ink ink3"></div>
+</div>
+
+<!-- Floating dots -->
+<div class="dot dot1"></div>
+<div class="dot dot2"></div>
+<div class="dot dot3"></div>
+<div class="dot dot4"></div>
+
+<!-- Corner flourishes -->
+<div class="corner corner-tl">
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <path d="M4 4 Q4 34 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <path d="M4 4 Q34 4 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <circle cx="4" cy="4" r="3" fill="#5A8BA3"/>
+    <circle cx="34" cy="34" r="2" fill="#7BA9C2"/>
+    <path d="M14 4 Q14 22 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+    <path d="M4 14 Q22 14 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+  </svg>
+</div>
+<div class="corner corner-tr">
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <path d="M4 4 Q4 34 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <path d="M4 4 Q34 4 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <circle cx="4" cy="4" r="3" fill="#5A8BA3"/>
+    <circle cx="34" cy="34" r="2" fill="#7BA9C2"/>
+    <path d="M14 4 Q14 22 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+    <path d="M4 14 Q22 14 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+  </svg>
+</div>
+<div class="corner corner-bl">
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <path d="M4 4 Q4 34 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <path d="M4 4 Q34 4 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <circle cx="4" cy="4" r="3" fill="#5A8BA3"/>
+    <circle cx="34" cy="34" r="2" fill="#7BA9C2"/>
+    <path d="M14 4 Q14 22 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+    <path d="M4 14 Q22 14 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+  </svg>
+</div>
+<div class="corner corner-br">
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+    <path d="M4 4 Q4 34 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <path d="M4 4 Q34 4 34 34" stroke="#2A5F80" stroke-width="1.2" fill="none"/>
+    <circle cx="4" cy="4" r="3" fill="#5A8BA3"/>
+    <circle cx="34" cy="34" r="2" fill="#7BA9C2"/>
+    <path d="M14 4 Q14 22 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+    <path d="M4 14 Q22 14 30 30" stroke="#7BA9C2" stroke-width=".7" fill="none" opacity=".55"/>
+  </svg>
+</div>
+
+<!-- ════ THE CARD ════ -->
+<div class="card-wrap">
+  <div class="card">
+
+    <!-- Woodova logo -->
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7 L7 19 L13 9 L19 19 L23 7" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="logo-name">Woodova</div>
+    </div>
+
+    <!-- Ornament -->
+    <div class="ornament">
+      <div class="orn-line"></div>
+      <div class="orn-mid">✦ ✦ ✦</div>
+      <div class="orn-line r"></div>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="heading">Thank You</h1>
+    <div class="for-line">For Choosing Woodova</div>
+
+    <!-- Body -->
+    <p class="body-text">
+      We value your feedback and would love to hear about your experience.
+      Each piece is handcrafted with love — your thoughts help us continue
+      creating sustainable, timeless décor.
+    </p>
+
+    <!-- Tagline -->
+    <div class="tagline">Where Elegance Meets Everyday Living</div>
+
+    <!-- WhatsApp CTA -->
+    <div class="btn-wrap">
+      <a
+        class="share-btn"
+        href="https://wa.me/916235716717?text=Hello%20Woodova%2C%20I%20would%20like%20to%20share%20my%20experience%20with%20your%20product."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share your experience on WhatsApp"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Share Your Experience
+      </a>
+    </div>
+
+    <!-- 5-star footer -->
+    <div class="card-footer">
+      <div class="stars-invite">Join our 5 star family · Leave us a review</div>
+      <div class="stars-row">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <div class="gratitude">
+        <div class="grat-script">With gratitude,</div>
+        <div class="grat-sep">·</div>
+        <div class="grat-name">Team Woodova</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
