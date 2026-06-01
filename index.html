@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Woodova — Thank you for choosing us. Share your experience.">
 <meta name="theme-color" content="#DCEEF5">
 <title>Thank You — Woodova</title>
@@ -12,18 +12,19 @@
 <style>
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; }
-
-/* ── Page ── */
+html { height: 100%; -webkit-text-size-adjust: 100%; }
 body {
   font-family: 'DM Sans', sans-serif;
   min-height: 100vh;
+  min-height: 100dvh; /* dynamic viewport for iOS Safari */
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  position: relative;
   background: #DCEEF5;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
 /* ── Watercolour background ── */
@@ -38,9 +39,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 10%,  rgba(255,255,255,0.55) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 70% at 85% 80%,  rgba(92,145,179,0.18) 0%, transparent 55%),
-    radial-gradient(ellipse 90% 80% at 50% 50%,  #DCEEF5 0%, #C9E0EC 100%);
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,255,255,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 85% 80%, rgba(92,145,179,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 80% at 50% 50%, #DCEEF5 0%, #C9E0EC 100%);
 }
 .bg-wash::after {
   content: '';
@@ -52,171 +53,180 @@ body {
   mix-blend-mode: multiply;
 }
 
-/* Drifting ink blobs */
+/* Ink blobs — smaller on mobile */
 .ink {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
+  filter: blur(60px);
   pointer-events: none;
   animation: drift ease-in-out infinite alternate;
 }
-.ink1 { width: 420px; height: 420px; background: rgba(92,145,179,0.22); top: -100px; right: -80px; animation-duration: 14s; }
-.ink2 { width: 300px; height: 300px; background: rgba(123,169,194,0.18); bottom: -60px; left: -60px; animation-duration: 11s; animation-delay: -5s; }
-.ink3 { width: 200px; height: 200px; background: rgba(255,255,255,0.5); top: 40%; left: 5%; animation-duration: 9s; animation-delay: -3s; }
+.ink1 { width: 400px; height: 400px; background: rgba(92,145,179,0.22); top: -80px; right: -80px; animation-duration: 14s; }
+.ink2 { width: 280px; height: 280px; background: rgba(123,169,194,0.18); bottom: -60px; left: -60px; animation-duration: 11s; animation-delay: -5s; }
+.ink3 { width: 180px; height: 180px; background: rgba(255,255,255,0.45); top: 40%; left: 5%; animation-duration: 9s; animation-delay: -3s; }
 @keyframes drift {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(20px, -28px) scale(1.07); }
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(18px,-24px) scale(1.06); }
 }
 
-/* ── Decorative corner flourishes ── */
-.corner { position: fixed; pointer-events: none; opacity: 0.22; z-index: 1; }
+/* ── Corner flourishes — desktop only ── */
+.corner { position: fixed; pointer-events: none; opacity: 0.2; z-index: 1; }
 .corner svg { display: block; }
-.corner-tl { top: 18px; left: 18px; }
-.corner-tr { top: 18px; right: 18px; transform: scaleX(-1); }
-.corner-bl { bottom: 18px; left: 18px; transform: scaleY(-1); }
-.corner-br { bottom: 18px; right: 18px; transform: scale(-1); }
+.corner-tl { top: 16px; left: 16px; }
+.corner-tr { top: 16px; right: 16px; transform: scaleX(-1); }
+.corner-bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+.corner-br { bottom: 16px; right: 16px; transform: scale(-1); }
 
-/* ── Card ── */
+/* ── Card wrapper — scrollable container ── */
 .card-wrap {
   position: relative;
   z-index: 10;
-  padding: 1.5rem;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  /* iOS safe area padding (notch / home bar) */
+  padding: max(2rem, env(safe-area-inset-top))
+           max(1.25rem, env(safe-area-inset-right))
+           max(2rem, env(safe-area-inset-bottom))
+           max(1.25rem, env(safe-area-inset-left));
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
+/* ── The card ── */
 .card {
-  background: rgba(245,251,254,0.75);
-  backdrop-filter: blur(32px) saturate(1.6);
-  -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  background: rgba(245,251,254,0.76);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
   border: 1px solid rgba(255,255,255,0.88);
-  border-radius: 28px;
-  padding: 3.5rem 3rem 2.8rem;
-  max-width: 480px;
+  border-radius: 26px;
+  padding: 3rem 2.5rem 2.5rem;
+  max-width: 460px;
   width: 100%;
   text-align: center;
   box-shadow:
     0 2px 4px rgba(63,116,153,0.04),
-    0 8px 32px rgba(63,116,153,0.12),
-    0 32px 72px rgba(63,116,153,0.10),
+    0 8px 28px rgba(63,116,153,0.12),
+    0 28px 64px rgba(63,116,153,0.10),
     0 1px 0 rgba(255,255,255,0.95) inset;
-  animation: cardReveal 1s cubic-bezier(.16,1,.3,1) both;
+  animation: cardReveal .9s cubic-bezier(.16,1,.3,1) both;
   position: relative;
   overflow: hidden;
+  /* Push card to centre vertically only when there's room */
+  margin: auto;
 }
 .card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, rgba(123,169,194,0.7), transparent);
-  border-radius: 28px 28px 0 0;
+  border-radius: 26px 26px 0 0;
 }
 .card::after {
   content: '';
-  position: absolute;
-  inset: 0; z-index: -1;
+  position: absolute; inset: 0; z-index: -1;
   background:
     radial-gradient(ellipse 70% 50% at 80% 10%, rgba(92,145,179,0.07) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 15% 90%, rgba(220,238,245,0.45) 0%, transparent 55%);
   border-radius: inherit;
 }
-
 @keyframes cardReveal {
-  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ── Logo ── */
 .logo-wrap {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
   animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .15s both;
 }
 .logo-icon {
-  width: 52px; height: 52px;
-  margin: 0 auto .6rem;
+  width: 50px; height: 50px;
+  margin: 0 auto .55rem;
   background: linear-gradient(135deg, #7BA9C2 0%, #4A85A8 100%);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 4px 16px rgba(74,133,168,0.35);
 }
-.logo-icon svg { width: 26px; height: 26px; }
+.logo-icon svg { width: 24px; height: 24px; }
 .logo-name {
   font-family: 'Great Vibes', cursive;
-  font-size: 22px;
-  color: #2A5F80;
-  letter-spacing: .5px;
-  line-height: 1;
+  font-size: 22px; color: #2A5F80;
+  letter-spacing: .5px; line-height: 1;
 }
 
 /* ── Ornament divider ── */
 .ornament {
   display: flex; align-items: center; justify-content: center;
-  gap: 10px; margin-bottom: 1.5rem;
+  gap: 10px; margin-bottom: 1.3rem;
   animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .25s both;
 }
-.orn-line { flex: 1; max-width: 55px; height: 1px; background: linear-gradient(90deg, transparent, #B8D4E2); }
+.orn-line { flex: 1; max-width: 50px; height: 1px; background: linear-gradient(90deg, transparent, #B8D4E2); }
 .orn-line.r { background: linear-gradient(90deg, #B8D4E2, transparent); }
-.orn-mid { color: #7BA9C2; font-size: 9px; letter-spacing: 8px; }
+.orn-mid { color: #7BA9C2; font-size: 9px; letter-spacing: 7px; }
 
 /* ── Heading ── */
 h1.heading {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(54px, 15vw, 78px);
+  /* fluid: 52px on 320px screen → 76px on 600px+ */
+  font-size: clamp(52px, 16vw, 76px);
   line-height: 1.0;
   color: #1E4D6B;
   margin-bottom: .1rem;
-  filter: drop-shadow(0 2px 12px rgba(30,77,107,0.14));
+  filter: drop-shadow(0 2px 10px rgba(30,77,107,0.13));
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .3s both;
 }
 
 .for-line {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 13px; font-weight: 400;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  color: #5A8BA3;
-  margin-bottom: 1.8rem;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 400; letter-spacing: 2.5px; text-transform: uppercase;
+  color: #5A8BA3; margin-bottom: 1.5rem;
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .38s both;
 }
 
 /* ── Body text ── */
 .body-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 17px; font-style: italic; font-weight: 300;
-  color: #305A6F;
-  line-height: 1.9;
-  margin-bottom: 1.8rem;
-  padding: 0 .25rem;
+  font-size: clamp(15px, 4.2vw, 17px);
+  font-style: italic; font-weight: 300;
+  color: #305A6F; line-height: 1.85;
+  margin-bottom: 1.5rem; padding: 0;
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .45s both;
 }
 
 /* ── Tagline ── */
 .tagline {
   font-family: 'Great Vibes', cursive;
-  font-size: 22px; color: #5A8BA3;
-  margin-bottom: 2rem;
+  font-size: clamp(18px, 5.5vw, 22px);
+  color: #5A8BA3; margin-bottom: 1.8rem;
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .52s both;
 }
 
 /* ── Button ── */
 .btn-wrap {
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .6s both;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
 }
 .share-btn {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: flex;             /* full-width on all screens */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;               /* full card width */
   background: linear-gradient(135deg, #7BA9C2 0%, #4A85A8 100%);
   color: #fff;
   border: none; border-radius: 50px;
-  padding: 15px 40px;
+  padding: 16px 28px;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px; font-weight: 500; letter-spacing: .4px;
   cursor: pointer; text-decoration: none;
-  box-shadow: 0 6px 22px rgba(74,133,168,0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+  min-height: 54px;          /* comfortable tap target */
+  box-shadow: 0 6px 22px rgba(74,133,168,0.38), 0 1px 0 rgba(255,255,255,0.2) inset;
   transition: background .3s, transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   position: relative; overflow: hidden;
 }
 .share-btn::after {
@@ -228,25 +238,26 @@ h1.heading {
 .share-btn:hover::after { left: 160%; }
 .share-btn:hover {
   background: linear-gradient(135deg, #5C91B3 0%, #2F6A8A 100%);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 36px rgba(47,106,138,0.45), 0 1px 0 rgba(255,255,255,0.18) inset;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(47,106,138,0.42), 0 1px 0 rgba(255,255,255,0.18) inset;
 }
-.share-btn:active { transform: scale(.97); }
+.share-btn:active { transform: scale(.97); opacity: .92; }
 
 /* ── Card footer ── */
 .card-footer {
   border-top: 1px solid rgba(123,169,194,0.22);
-  padding-top: 1.6rem;
+  padding-top: 1.5rem;
   animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .68s both;
 }
 .stars-invite {
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px; letter-spacing: .8px; text-transform: uppercase;
-  color: #7BA9C2; margin-bottom: .6rem;
+  font-size: 11px; letter-spacing: .7px; text-transform: uppercase;
+  color: #7BA9C2; margin-bottom: .55rem;
 }
-.stars-row { display: flex; justify-content: center; gap: 4px; }
+.stars-row { display: flex; justify-content: center; gap: 5px; }
 .star {
-  font-size: 22px; color: #1E4D6B; opacity: 0;
+  font-size: clamp(18px, 5vw, 22px);
+  color: #1E4D6B; opacity: 0;
   animation: starPop .4s cubic-bezier(.34,1.56,.64,1) both;
 }
 .star:nth-child(1) { animation-delay: .72s; }
@@ -258,25 +269,27 @@ h1.heading {
   from { opacity:0; transform: scale(.3) rotate(-20deg); }
   to   { opacity:1; transform: scale(1) rotate(0deg); }
 }
+
 .gratitude {
-  margin-top: 1.3rem;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  gap: 7px; flex-wrap: wrap;
   animation: fadeUp .8s cubic-bezier(.16,1,.3,1) 1.1s both;
 }
-.grat-script { font-family: 'Great Vibes', cursive; font-size: 19px; color: #5A8BA3; }
+.grat-script { font-family: 'Great Vibes', cursive; font-size: 18px; color: #5A8BA3; }
 .grat-sep { color: #B8D4E2; }
-.grat-name { font-family: 'DM Sans', sans-serif; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #7BA9C2; }
+.grat-name { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #7BA9C2; }
 
-/* ── Shared ── */
+/* ── Shared animation ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Floating dots ── */
 .dot {
   position: fixed; border-radius: 50%;
-  background: rgba(92,145,179,0.18);
+  background: rgba(92,145,179,0.16);
   pointer-events: none;
   animation: floatDot ease-in-out infinite alternate;
 }
@@ -286,16 +299,57 @@ h1.heading {
 .dot4 { width:4px; height:4px; top:22%; right:20%; animation-duration:5s; animation-delay:-2s; }
 @keyframes floatDot {
   from { transform: translate(0,0); opacity:.4; }
-  to   { transform: translate(6px,-10px); opacity:.9; }
+  to   { transform: translate(5px,-9px); opacity:.85; }
 }
 
-/* ── Responsive ── */
-@media (max-width: 480px) {
-  .card { padding: 2.8rem 1.8rem 2.2rem; border-radius: 22px; }
-  h1.heading { font-size: 58px; }
-  .body-text { font-size: 16px; }
-  .share-btn { padding: 14px 28px; font-size: 14px; width: 100%; justify-content: center; }
+/* ═══════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════ */
+
+/* Small phones (≤ 360px) */
+@media (max-width: 360px) {
+  .card { padding: 2.2rem 1.3rem 2rem; border-radius: 20px; }
+  h1.heading { font-size: 46px; }
+  .body-text { font-size: 14.5px; line-height: 1.8; }
+  .tagline { font-size: 17px; }
+  .share-btn { font-size: 14px; padding: 14px 20px; }
+  .corner, .dot { display: none; }
+}
+
+/* Regular phones (361px – 480px) */
+@media (min-width: 361px) and (max-width: 480px) {
+  .card { padding: 2.5rem 1.6rem 2.2rem; border-radius: 22px; }
+  h1.heading { font-size: 54px; }
+  .body-text { font-size: 15.5px; }
   .corner { display: none; }
+}
+
+/* Large phones / small tablets (481px – 600px) */
+@media (min-width: 481px) and (max-width: 600px) {
+  .card { padding: 2.8rem 2rem 2.4rem; }
+  h1.heading { font-size: 60px; }
+  .corner { display: none; }
+}
+
+/* Landscape phones — short viewport, needs scroll room */
+@media (max-height: 600px) and (orientation: landscape) {
+  .card-wrap { align-items: flex-start; padding-top: 1.2rem; padding-bottom: 1.2rem; }
+  .card { padding: 1.8rem 2rem 1.8rem; }
+  .logo-wrap { margin-bottom: 1rem; }
+  .logo-icon { width: 40px; height: 40px; }
+  .ornament { margin-bottom: .9rem; }
+  h1.heading { font-size: 46px; margin-bottom: 0; }
+  .for-line { margin-bottom: 1rem; }
+  .body-text { margin-bottom: 1rem; font-size: 14px; line-height: 1.7; }
+  .tagline { font-size: 18px; margin-bottom: 1.2rem; }
+  .btn-wrap { margin-bottom: 1.2rem; }
+  .card-footer { padding-top: 1rem; }
+  .corner, .dot { display: none; }
+}
+
+/* Tablets (601px – 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .card { padding: 3.2rem 2.8rem 2.8rem; max-width: 500px; }
 }
 </style>
 </head>
@@ -395,7 +449,7 @@ h1.heading {
     <div class="btn-wrap">
       <a
         class="share-btn"
-        href="https://wa.me/916235716717?text=Hello%20Woodova%2C%20I%20would%20like%20to%20share%20my%20experience%20with%20your%20product."
+        href="https://wa.me/916235716717?text=Can%20I%20get%20more%20info%20about%20this%3F"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Share your experience on WhatsApp"
